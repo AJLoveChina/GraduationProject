@@ -1,6 +1,9 @@
 package com.meajax.controller;
 
-import com.meajax.model.Map;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.meajax.model.Baidu;
 
 public class MapTest {
 	public static void main(String[] args) {
@@ -20,8 +23,11 @@ public class MapTest {
 //		
 //		System.out.println(distance);
 		
-		double d = 12.43;
-		System.out.println((int)d);
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(12);
+		list.add(13);
+		list.add(15);
 		
+		System.out.println(list);
 	}
 }

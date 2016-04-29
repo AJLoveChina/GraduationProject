@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-public class Map {
+public class Baidu {
 	public class Point{
 		/**
 		 * 经度
@@ -132,7 +132,7 @@ public class Map {
 		params.put("origins", start.getLongitude() + "," + start.getLatitude());
 		params.put("destinations", end.getLongitude() + "," + end.getLatitude());
 		params.put("output", "json");
-		params.put("ak", "2MMoMsOS2C0EMRKZ5sRMjoCnq0amFj1R");
+		params.put("ak", "hemnsARytfYF7dsYlLCnaZKUeCryW93y");
 		
 		AjaxRequest.Config config = ar.new Config(url, params, "GET");
 		
