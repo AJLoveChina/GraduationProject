@@ -13,19 +13,19 @@ public class MainTest {
 		List<Point> resourcePoints = new ArrayList<Point>();
 		
 		for (int i = 0; i < 5; i++) {
-			resourcePoints.add(new Point(Point.Type.RESOURCE));
+			resourcePoints.add(new Point(Point.Type.RESOURCE, i));
 		}
 		
 		// 随机初始化几个灾害点
 		List<Point> damagePoints = new ArrayList<Point>();
 		for (int i = 0; i < 10; i++) {
-			damagePoints.add(new Point(Point.Type.DAMAGE));
+			damagePoints.add(new Point(Point.Type.DAMAGE, i));
 		}
 		
 		
 		SchemePopulation pop = new SchemePopulation();
-		pop.setResources(resourcePoints);
-		pop.setDamages(damagePoints);
+		pop.setResourcesPoints(resourcePoints);
+		pop.setDamagesPoints(damagePoints);
 		
 		pop.init();
 		

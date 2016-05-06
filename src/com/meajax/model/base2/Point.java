@@ -24,9 +24,22 @@ public class Point {
 	 * 纬度
 	 */
 	private double latitude;
+	/**
+	 * 点的唯一标识
+	 */
 	private int id;
+	/**
+	 * 点的名称
+	 */
 	private String name;
+	/**
+	 * 点的类型
+	 */
 	private Type type;
+	/**
+	 * 资源数量
+	 */
+	private int resourceAmount;
 	
 	
 	/**
@@ -77,8 +90,33 @@ public class Point {
 	 * 该构造器随机初始化一个点
 	 * @param type
 	 */
-	public Point(Type type) {
-		this.initByRandom(type);
+	public Point(Type type, int id) {
+		Random rd = new Random();
+		int amount;
+		String name;
+		
+		this.setLatitude(117 + Math.random());
+		this.setLongitude(31 + Math.random());
+		this.setId(id);
+		this.setType(type);
+		
+		switch (type) {
+		case DAMAGE:
+			amount = rd.nextInt(10);
+			name = "D" + id;
+			break;
+
+		case RESOURCE:
+			amount = rd.nextInt(20);
+			name = "R" + id;
+			break;
+		default:
+			amount = rd.nextInt(15);
+			name = "U" + id;
+			break;
+		}
+		this.setResourceAmount(amount);
+		this.setName(name);
 	}
 
 
@@ -93,6 +131,14 @@ public class Point {
 	}
 
 	
+	public int getResourceAmount() {
+		return resourceAmount;
+	}
+
+	public void setResourceAmount(int resourceAmount) {
+		this.resourceAmount = resourceAmount;
+	}
+
 	public Type getType() {
 		return type;
 	}
@@ -125,23 +171,12 @@ public class Point {
 		this.name = name;
 	}
 	
-	/**
-	 * 根据指定的点类型, 随机初始化一个点
-	 */
-	private void initByRandom(Type type) {
-		//TODO
-	}
+
 	
 
 
 	
-	public static void main(String[] args) {
-		Map<Resource.Type, Double> map = new HashMap<Resource.Type, Double>();
-		map.put(Resource.Type.FOOD, 120.0);
-		
-		Double val = map.get(Resource.Type.WATER);
-		System.out.println(val);
-	}
+
 
 	/**
 	 * 是否是资源点

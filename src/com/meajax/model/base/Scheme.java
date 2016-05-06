@@ -262,4 +262,9 @@ public class Scheme implements Individual{
 	public String toString() {
 		return "Scheme [resources=" + resources + ", damages=" + damages + "]";
 	}
+
+	public int[][] getGenes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

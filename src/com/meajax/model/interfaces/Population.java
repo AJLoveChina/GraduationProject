@@ -1,5 +1,7 @@
 package com.meajax.model.interfaces;
 
+import java.util.List;
+
 public interface  Population{
 	
 	/**
@@ -41,4 +43,11 @@ public interface  Population{
 	 * @return
 	 */
 	public Population evolution();
+	
+	/**
+	 * 获取一个种群所有的个体
+	 */
+	public List<Individual> getSchemes();
+	
+	
 }

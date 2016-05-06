@@ -2,6 +2,7 @@ package com.meajax.controller;
 
 
 import com.meajax.model.interfaces.GA;
+import com.meajax.model.interfaces.Individual;
 import com.meajax.model.interfaces.Population;
 
 public class Run {
@@ -19,7 +20,9 @@ public class Run {
 
 	public Run(Population population) {
 		this.setPopulation(population);
-		System.out.println("Initial best individual: " + population.getFittest().toString());
+		Individual scheme = population.getFittest();
+		System.out.println("Initial best individual: fit val = " + scheme.getFitness());
+		System.out.println(scheme.toString());
 	}
 	
 	
@@ -28,8 +31,9 @@ public class Run {
 			this.setPopulation(population.evolution());
         }
 		System.out.println("Finished (iterations = " + iterations + "): ");
-        System.out.println("Best Individual : ");
-        System.out.println(population.getFittest());
+        Individual scheme = population.getFittest();
+		System.out.println("Best Individual : fit val = " + scheme.getFitness());
+		System.out.println(scheme.toString());
 	}
 	
 	public void start(int iterations) {

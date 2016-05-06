@@ -32,4 +32,11 @@ public interface Individual {
 	 */
 	public Individual crossoverWith(Individual individual);
 	
+	
+	/**
+	 * 获取基因
+	 * @return
+	 */
+	public int[][] getGenes();
+	
 }
