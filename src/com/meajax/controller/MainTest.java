@@ -3,7 +3,7 @@ package com.meajax.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.meajax.model.base.*;
+import com.meajax.model.base2.*;
 
 public class MainTest {
 	
@@ -29,9 +29,7 @@ public class MainTest {
 		
 		pop.init();
 		
-		SchemeGA ga = new SchemeGA();
-		
-		Run run = new Run(pop, ga);
+		Run run = new Run(pop);
 		run.start(100);
 		
 		

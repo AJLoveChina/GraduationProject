@@ -1,4 +1,4 @@
-package com.meajax.model.base;
+package com.meajax.model.base2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +52,14 @@ public class SchemePopulation implements Population{
 		
 		for (int i = 0; i < SCHEME_NUM; i ++) {
 			Scheme scheme = new Scheme();
-			scheme.setDamages(damages);
-			scheme.setResources(resources);
+			scheme.setDamagePoints(damages);
+			scheme.setResourcePoints(resources);
 			scheme.generateIndividual();
 			
 			schemes.add(scheme);
 		}
 		
 		this.setSchemes(schemes);
-		
 	}
 
 
@@ -90,6 +89,7 @@ public class SchemePopulation implements Population{
 		this.getSchemes().add(individual);
 	}
 
+	
 	public Population evolution() {
 		// TODO Auto-generated method stub
 		return null;

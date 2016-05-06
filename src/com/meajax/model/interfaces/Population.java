@@ -34,4 +34,11 @@ public interface  Population{
 	 * @return
 	 */
 	public int populationSize();
+	
+	
+	/**
+	 * 种群进化
+	 * @return
+	 */
+	public Population evolution();
 }

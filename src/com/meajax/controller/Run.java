@@ -6,15 +6,9 @@ import com.meajax.model.interfaces.Population;
 
 public class Run {
 	private Population population;
-	private GA ga;
 	
 	
-	public GA getGa() {
-		return ga;
-	}
-	public void setGa(GA ga) {
-		this.ga = ga;
-	}
+	
 	public Population getPopulation() {
 		return population;
 	}
@@ -23,16 +17,15 @@ public class Run {
 	}
 
 
-	public Run(Population population, GA ga) {
+	public Run(Population population) {
 		this.setPopulation(population);
-		this.setGa(ga);
 		System.out.println("Initial best individual: " + population.getFittest().toString());
 	}
 	
 	
 	private void evolution(int iterations) {
 		for (int i = 0; i < iterations; i++) {
-            this.setPopulation(ga.evolvePopulation(population));
+			this.setPopulation(population.evolution());
         }
 		System.out.println("Finished (iterations = " + iterations + "): ");
         System.out.println("Best Individual : ");
