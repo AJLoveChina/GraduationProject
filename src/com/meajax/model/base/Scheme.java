@@ -267,4 +267,9 @@ public class Scheme implements Individual{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public boolean isEligible() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

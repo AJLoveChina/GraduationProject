@@ -39,4 +39,9 @@ public interface Individual {
 	 */
 	public int[][] getGenes();
 	
+	
+	/**
+	 * 是否是合格的个体
+	 */
+	public boolean isEligible();
 }

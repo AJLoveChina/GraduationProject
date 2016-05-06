@@ -166,6 +166,10 @@ public class Scheme implements Individual{
 		double[] distances = new double[this.genes.length];
 		
 		for (int j = 0; j < this.genes[0].length; j++) {
+			amountGet = 0;
+			costForEachDamage = 0;
+			amountNeed = this.getDamagePoints().get(j).getResourceAmount();
+			
 			for (int i = 0; i < this.genes.length; i++) {
 				
 				rPoint = this.getResourcePoints().get(i);
@@ -176,7 +180,6 @@ public class Scheme implements Individual{
 				costForEachDamage  += distance * this.genes[i][j];
 				amountGet += this.genes[i][j];
 			}
-			amountNeed = this.getDamagePoints().get(j).getResourceAmount();
 			
 			for (double distance2 : distances) {
 				costForEachDamage += Math.abs(amountGet - amountNeed) * distance2;
@@ -235,6 +238,7 @@ public class Scheme implements Individual{
 		StringBuilder sb = new StringBuilder();
 		
 		int[][] arr = this.getGenes();
+		int amount;
 		sb.append("\t\t");
 		for (int i = 0; i < this.getDamagePoints().size(); i ++) {
 			sb.append(this.getDamagePoints().get(i).getName()  + "(" + this.getDamagePoints().get(i).getResourceAmount() + ")" + "\t");
@@ -242,17 +246,33 @@ public class Scheme implements Individual{
 		sb.append("\n");
 		
 		for (int i = 0; i < arr.length; i++) {
+			amount = 0;
 			sb.append(this.getResourcePoints().get(i).getName() + "(" + this.getResourcePoints().get(i).getResourceAmount() + ")" + "\t\t");
 			for (int j = 0; j < arr[i].length; j++) {
+				amount += arr[i][j];
 				sb.append(arr[i][j] + "\t");
 			}
+			sb.append(amount);
 			sb.append("\n");
+			
 		}
 		return sb.toString();
 	}
 	
 	public static void main(String[] args) {
 		int[][] arr  = new int[3][4];
+	}
+
+	/**
+	 * 是否是合理的个体, 资源点输出数量大于本身拥有的数量被认为是不合理的个体
+	 */
+	public boolean isEligible() {
+		for (int i = 0; i < this.getResourcePoints().size(); i++) {
+			if (this.getLeftResourceAmountOf(this.getResourcePoints().get(i), this.getGenes()) < 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
  
