@@ -137,6 +137,7 @@ public class SchemePopulation implements Population{
 		
 		while(schemes.size() < this.SCHEME_NUM) {
 			Individual scheme = this.generateANewIndividual();
+			scheme.mutate();
 			if (scheme.isEligible()) {
 				schemes.add(scheme);
 			}

@@ -85,16 +85,18 @@ public class Scheme implements Individual{
 		
 		for (int i = 0; i < resourcePointsSize; i++) {
 			for (int j = 0; j < damagePointsSize; j++) {
+//				int amountTotalHave = this.getResourcePoints().get(i).getResourceAmount();
+//				int amountTotalNeed = this.getDamagePoints().get(j).getResourceAmount();
 				int amountLeft = this.getLeftResourceAmountOf(this.getResourcePoints().get(i), arr);
 				int amountLack = this.getLackResourceAmountOf(this.getDamagePoints().get(j), arr);
 				
 				int limit;
 				limit = (amountLeft > amountLack) ? amountLack : amountLeft;
-				
+//				limit = amountTotalHave > amountTotalNeed ? amountTotalNeed : amountTotalHave;
 				if (limit == 0) {
 					arr[i][j] = 0;
 				} else {
-					arr[i][j] = rd.nextInt(limit); 
+					arr[i][j] = rd.nextInt(limit + 1); 
 				}
 			}
 		}
@@ -149,17 +151,7 @@ public class Scheme implements Individual{
 		Point dPoint;
 		
 		double distance;
-		double cost = 0;
-		
-//		for (int i = 0; i < this.genes.length; i++) {
-//			for (int j = 0; j < this.genes[i].length; j++) {
-//				rPoint = this.getResourcePoints().get(i);
-//				dPoint = this.getDamagePoints().get(j);
-//				
-//				distance = rPoint.getDistanceTo(dPoint);
-//				cost  += distance * this.genes[i][j];
-//			}
-//		}
+		double cost = 0;	// 总共成本
 		int amountGet = 0;
 		int amountNeed;
 		double costForEachDamage = 0;
@@ -182,7 +174,7 @@ public class Scheme implements Individual{
 			}
 			
 			for (double distance2 : distances) {
-				costForEachDamage += Math.abs(amountGet - amountNeed) * distance2;
+				costForEachDamage += Math.pow(Math.abs(amountGet - amountNeed), 2) * distance2;
 			}
 			
 			cost += costForEachDamage;
@@ -191,7 +183,9 @@ public class Scheme implements Individual{
 		this.setFitVal(1 / cost);
 	}
 
-	
+	/**
+	 * 个体
+	 */
 	public void mutate() {
 		Random rd = new Random();
 		int[][] arr  = this.getGenes();
@@ -202,7 +196,11 @@ public class Scheme implements Individual{
 					int result = arr[i][j];
 					int offset = (int)Math.floor(result * 0.1);
 					
-					arr[i][j] = result + offset;
+					if (rd.nextFloat() < 0.5) {
+						arr[i][j] = result + offset;
+					} else {
+						arr[i][j] = result - offset;
+					}
 				}
 				
 			}
@@ -239,10 +237,12 @@ public class Scheme implements Individual{
 		
 		int[][] arr = this.getGenes();
 		int amount;
+		int[] amountX = new int[this.getGenes()[0].length];
 		sb.append("\t\t");
 		for (int i = 0; i < this.getDamagePoints().size(); i ++) {
 			sb.append(this.getDamagePoints().get(i).getName()  + "(" + this.getDamagePoints().get(i).getResourceAmount() + ")" + "\t");
 		}
+		sb.append("Total");
 		sb.append("\n");
 		
 		for (int i = 0; i < arr.length; i++) {
@@ -250,11 +250,16 @@ public class Scheme implements Individual{
 			sb.append(this.getResourcePoints().get(i).getName() + "(" + this.getResourcePoints().get(i).getResourceAmount() + ")" + "\t\t");
 			for (int j = 0; j < arr[i].length; j++) {
 				amount += arr[i][j];
+				amountX[j] += arr[i][j];
 				sb.append(arr[i][j] + "\t");
 			}
 			sb.append(amount);
 			sb.append("\n");
-			
+		}
+		sb.append("-------------------------------------------------------------------------------------------------------------------" + "\n");
+		sb.append("Total : \t");
+		for (int i = 0; i < amountX.length; i++) {
+			sb.append(amountX[i] + "\t");
 		}
 		return sb.toString();
 	}

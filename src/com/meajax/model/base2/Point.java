@@ -41,6 +41,9 @@ public class Point {
 	 */
 	private int resourceAmount;
 	
+	public final int BASE_AMOUNT_OF_RESOURCE = 20;
+	public final int BASE_AMOUNT_OF_DAMAGE = 100;
+	
 	
 	/**
 	 * 到某点的路程 存储表
@@ -102,16 +105,16 @@ public class Point {
 		
 		switch (type) {
 		case DAMAGE:
-			amount = rd.nextInt(10);
+			amount = rd.nextInt(BASE_AMOUNT_OF_DAMAGE);
 			name = "D" + id;
 			break;
 
 		case RESOURCE:
-			amount = rd.nextInt(20);
+			amount = rd.nextInt(BASE_AMOUNT_OF_RESOURCE);
 			name = "R" + id;
 			break;
 		default:
-			amount = rd.nextInt(15);
+			amount = rd.nextInt((BASE_AMOUNT_OF_RESOURCE + BASE_AMOUNT_OF_DAMAGE) / 2);
 			name = "U" + id;
 			break;
 		}
