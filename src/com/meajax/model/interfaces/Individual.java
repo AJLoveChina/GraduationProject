@@ -2,6 +2,8 @@ package com.meajax.model.interfaces;
 
 import java.util.List;
 
+import com.meajax.model.base2.Aim;
+
 public interface Individual {
 	
 	/**
@@ -64,4 +66,7 @@ public interface Individual {
 	
 	
 	public boolean isDominate(Individual individual);
+	
+	public double getFitnessOf(Aim aim);
+	
 }

@@ -1,6 +1,9 @@
 package com.meajax.controller;
 
 
+import java.util.List;
+
+import com.meajax.model.base2.SchemePopulation;
 import com.meajax.model.interfaces.GA;
 import com.meajax.model.interfaces.Individual;
 import com.meajax.model.interfaces.Population;
@@ -31,9 +34,15 @@ public class Run {
 			this.setPopulation(population.evolutionByNSGA2());
         }
 		System.out.println("Finished (iterations = " + iterations + "): ");
-        Individual scheme = population.getFittest();
-		System.out.println("Best Individual : fit val = " + scheme.getFitness());
-		System.out.println(scheme.toString());
+		
+		
+		
+		for (Individual scheme : population.getFirstFront()) {
+			System.out.println(scheme.toString());
+		}
+//        Individual scheme = population.getFittest();
+//		System.out.println("Best Individual : fit val = " + scheme.getFitness());
+//		System.out.println(scheme.toString());
 	}
 	
 	public void start(int iterations) {

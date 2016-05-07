@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 
 import com.meajax.model.Baidu;
-import com.meajax.model.base.Resource.Type;
 
 /**
  * 城市, 资源点, 灾害点

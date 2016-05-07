@@ -33,7 +33,15 @@ public class SchemePopulation implements Population{
 	 */
 	private Individual bestOne;
 	
+	private List<Individual> firstFront;
 
+	public List<Individual> getFirstFront() {
+		return firstFront;
+	}
+	
+	public void setFirstFront(List<Individual> schemes) {
+		this.setFirstFront(schemes);
+	}
 
 	public Individual getBestOne() {
 		return bestOne;
@@ -146,9 +154,6 @@ public class SchemePopulation implements Population{
 		
 		pop.setSchemes(schemes);
 		
-		// 后代与父代非支配排序
-		// ....
-		
 		return pop;
 	}
 	
@@ -163,8 +168,6 @@ public class SchemePopulation implements Population{
 		pop.setDamagesPoints(damagesPoints);
 		List<Individual> schemes = new ArrayList<Individual>();
 
-		// 最好的个体直接进入下一代
-		schemes.add(this.getFittest());
 		
 		while(schemes.size() < this.SCHEME_NUM) {
 			Individual scheme = this.generateANewIndividual();
@@ -177,15 +180,28 @@ public class SchemePopulation implements Population{
 		
 		schemes.addAll(this.getSchemes());
 		
-		System.out.println(schemes.size());
 		
 		// 后代与父代非支配排序
 		List<Front> fronts = this.nonDominatedSort(schemes);
 		
+		schemes = new ArrayList<Individual>();
+		Random rd = new Random();
+		for (int i = 0; i < fronts.size() && schemes.size() < this.SCHEME_NUM; i++) {
+			if (schemes.size() + fronts.get(i).size() <= this.SCHEME_NUM) {
+				schemes.addAll(fronts.get(i).schemes);
+			} else {
+				while(schemes.size() < this.SCHEME_NUM) {
+					schemes.add(fronts.get(i).schemes.get(rd.nextInt(fronts.get(i).size())));
+				}
+			}
+		}
+		
+		pop.setFirstFront(fronts.get(0).schemes);
+		pop.setSchemes(schemes);
 		return pop;
 	}
-
-	private class Front {
+	
+	public class Front {
 		List<Individual> schemes = new ArrayList<Individual>();
 		
 		void add(Individual scheme) {
@@ -195,28 +211,36 @@ public class SchemePopulation implements Population{
 		int size() {
 			return this.schemes.size();
 		}
+		
+		public List<Individual> getSchemes() {
+			return this.schemes;
+		}
 	}
 	/**
 	 * 快速非支配排序
 	 * @param schemes2
 	 */
-	private List<Front> nonDominatedSort(List<Individual> schemes) {
-		List<Front> fronts = new ArrayList<SchemePopulation.Front>();
+	public List<Front> nonDominatedSort(List<Individual> schemes) {
+ 		List<Front> fronts = new ArrayList<SchemePopulation.Front>();
 		
+		Front first = new Front();
 		for (Individual p : schemes) {
 			for (Individual q : schemes) {
+				if (p == q) continue;
 				if (p.isDominate(q)) {
 					p.addToDominatedList(q);
-				} else {
+				} else if (q.isDominate(p)){
 					p.increaseMembersDominateMe(1);
 				}
 			}
 			
 			if (p.getDominateMe() == 0) {
+				
 				p.setDominateRank(0);
-				fronts.get(0).add(p);
+				first.add(p);
 			}
 		}
+		fronts.add(first);
 		
 		int i = 0;
 		while(fronts.get(i).size() > 0) {
@@ -232,7 +256,7 @@ public class SchemePopulation implements Population{
 				}
 			}
 			i += 1;
-			fronts.set(i, front);
+			fronts.add(front); 
 		}
 		
 		return fronts;
@@ -266,6 +290,11 @@ public class SchemePopulation implements Population{
 		return "SchemePopulation [SCHEME_NUM=" + SCHEME_NUM + ", schemes="
 				+ schemes + ", resources=" + resourcesPoints + ", damages=" + damagesPoints
 				+ "]";
+	}
+
+	public void setIteration(int iteration) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

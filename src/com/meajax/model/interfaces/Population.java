@@ -2,6 +2,8 @@ package com.meajax.model.interfaces;
 
 import java.util.List;
 
+import com.meajax.model.base2.SchemePopulation.Front;
+
 public interface  Population{
 	
 	/**
@@ -54,6 +56,16 @@ public interface  Population{
 	 * 获取一个种群所有的个体
 	 */
 	public List<Individual> getSchemes();
+	
+	/**
+	 * 非支配排序
+	 * @param schemes
+	 * @return
+	 */
+	public List<Front> nonDominatedSort(List<Individual> schemes);
+	
+	
+	public List<Individual> getFirstFront();
 	
 	
 }

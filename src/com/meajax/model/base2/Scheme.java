@@ -1,11 +1,11 @@
 package com.meajax.model.base2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.meajax.model.base.Resource.Type;
 import com.meajax.model.interfaces.Individual;
 
 /**
@@ -55,6 +55,20 @@ public class Scheme implements Individual{
 	 * 支配等级
 	 */
 	private int dominateRank = 0;
+	
+	/**
+	 * 各个目标的适应度
+	 */
+	private Map<Aim, Double> fitnessMap = new HashMap<Aim, Double>();
+
+	
+	public Map<Aim, Double> getFitnessMap() {
+		return fitnessMap;
+	}
+
+	public void setFitnessMap(Map<Aim, Double> fitnessMap) {
+		this.fitnessMap = fitnessMap;
+	}
 
 	public int getDominateMe() {
 		return dominateMe;
@@ -337,8 +351,64 @@ public class Scheme implements Individual{
 	 * @return
 	 */
 	public boolean isDominate(Individual individual) {
-		//TODO
-		return false;
+		List<Integer> isDominate = new ArrayList<Integer>();
+		for (Aim aim : Aim.values()) {
+			double fitness1 = this.getFitnessOf(aim);
+			double fitness2 = individual.getFitnessOf(aim);
+			
+			if (fitness1 > fitness2) {
+				isDominate.add(1);
+			} else if (fitness1 < fitness2){
+				isDominate.add(2);
+			} else {
+				isDominate.add(3);
+			}
+		}
+		if (isDominate.contains(1) && isDominate.contains(2)) {
+			return false;
+		} else if (isDominate.contains(1) && !isDominate.contains(2)){
+			return true;
+		} else if (!isDominate.contains(1) && isDominate.contains(2)) {
+			return false;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 获取某个目标上的适应度
+	 * @param aim
+	 * @return
+	 */
+	public  double getFitnessOf(Aim aim) {
+		double fitness = 0;
+		switch(aim) {
+		case DISTANCES_MIN :
+			for (int i = 0; i < this.genes.length; i++) {
+				for (int j = 0; j < this.genes[i].length; j++) {
+					fitness -=  (this.genes[i][j] * this.getResourcePoints().get(i).getDistanceTo(this.getDamagePoints().get(j)));
+				}
+			}
+			break;
+		case FAIR :
+			for (int j = 0; j < this.genes[0].length; j++) {
+				int amountGet = this.getDamagePoints().get(j).getResourceAmountHasGet(this.genes);
+				int amountNeed = this.getDamagePoints().get(j).getResourceAmount();
+				
+				if (amountNeed != 0) {
+					fitness += amountGet / this.getDamagePoints().get(j).getResourceAmount();
+				}
+			}
+			break;
+		default:
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		this.getFitnessMap().put(aim, fitness);
+		return fitness;
 	}
 
 	/**
@@ -359,5 +429,7 @@ public class Scheme implements Individual{
 		this.dominateMe += i;
 		
 	}
+	
+	
 }
  
