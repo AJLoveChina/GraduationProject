@@ -12,13 +12,13 @@ public class MainTest {
 		// 随机初始化几个资源点
 		List<Point> resourcePoints = new ArrayList<Point>();
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			resourcePoints.add(new Point(Point.Type.RESOURCE, i));
 		}
 		
 		// 随机初始化几个灾害点
 		List<Point> damagePoints = new ArrayList<Point>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			damagePoints.add(new Point(Point.Type.DAMAGE, i));
 		}
 		

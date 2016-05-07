@@ -6,7 +6,7 @@ import java.util.List;
 import com.meajax.model.interfaces.Individual;
 import com.meajax.model.interfaces.Population;
 
-public class SchemePopulation implements Population{
+public class SchemePopulation{
 	
 	/**
 	 * 种群个体数量

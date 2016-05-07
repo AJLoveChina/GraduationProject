@@ -41,8 +41,8 @@ public class Point {
 	 */
 	private int resourceAmount;
 	
-	public final int BASE_AMOUNT_OF_RESOURCE = 20;
-	public final int BASE_AMOUNT_OF_DAMAGE = 100;
+	public final int BASE_AMOUNT_OF_RESOURCE = 100;
+	public final int BASE_AMOUNT_OF_DAMAGE = 50;
 	
 	
 	/**
@@ -211,6 +211,39 @@ public class Point {
 		return distance;
 	}
 
+	/**
+	 * 已经获得的资源数量
+	 * @param genes
+	 * @return
+	 */
+	public int getResourceAmountHasGet(int[][] genes) {
+		int hasGet = 0;
+		for (int i = 0; i < genes.length; i++) {
+			hasGet += genes[i][this.getId()];
+		}
+		return hasGet;
+	}
 
+	/**
+	 * 还缺少多少资源
+	 * @param genes
+	 * @return
+	 */
+	public int getResourceAmountLack(int[][] genes) {
+		return this.getResourceAmount() - this.getResourceAmountHasGet(genes);
+	}
+
+	/**
+	 * 还剩余多少资源
+	 * @return
+	 */
+	public int getResourceAmountLeft(int[][] genes) {
+		int index = this.getId();
+		int total = 0;
+		for (int i = 0; i < genes[index].length; i++) {
+			total += genes[index][i];
+		}
+		return this.getResourceAmount() - total;
+	}
 	
 }

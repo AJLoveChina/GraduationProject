@@ -13,7 +13,7 @@ import com.meajax.model.interfaces.Individual;
  * @author ajax
  *
  */
-public class Scheme implements Individual{
+public class Scheme {
 
 	/**
 	 * 资源点
@@ -269,6 +269,41 @@ public class Scheme implements Individual{
 	}
 
 	public boolean isEligible() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public List<Individual> getSchemesDominated() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addToDominatedList(Individual individual) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getDominateRank() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getDominateMe() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setDominateRank(int dominateRank) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void increaseMembersDominateMe(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isDominate(Individual individual) {
 		// TODO Auto-generated method stub
 		return false;
 	}

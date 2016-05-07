@@ -151,6 +151,92 @@ public class SchemePopulation implements Population{
 		
 		return pop;
 	}
+	
+	/**
+	 * 使用NSGA2算法的种群迭代
+	 * @return
+	 */
+	public Population evolutionByNSGA2() {
+		// 杂交繁衍下一代
+		SchemePopulation pop = new SchemePopulation();
+		pop.setResourcesPoints(resourcesPoints);
+		pop.setDamagesPoints(damagesPoints);
+		List<Individual> schemes = new ArrayList<Individual>();
+
+		// 最好的个体直接进入下一代
+		schemes.add(this.getFittest());
+		
+		while(schemes.size() < this.SCHEME_NUM) {
+			Individual scheme = this.generateANewIndividual();
+			scheme.mutate();
+			if (scheme.isEligible()) {
+				schemes.add(scheme);
+			}
+			
+		}
+		
+		schemes.addAll(this.getSchemes());
+		
+		System.out.println(schemes.size());
+		
+		// 后代与父代非支配排序
+		List<Front> fronts = this.nonDominatedSort(schemes);
+		
+		return pop;
+	}
+
+	private class Front {
+		List<Individual> schemes = new ArrayList<Individual>();
+		
+		void add(Individual scheme) {
+			this.schemes.add(scheme);
+		}
+		
+		int size() {
+			return this.schemes.size();
+		}
+	}
+	/**
+	 * 快速非支配排序
+	 * @param schemes2
+	 */
+	private List<Front> nonDominatedSort(List<Individual> schemes) {
+		List<Front> fronts = new ArrayList<SchemePopulation.Front>();
+		
+		for (Individual p : schemes) {
+			for (Individual q : schemes) {
+				if (p.isDominate(q)) {
+					p.addToDominatedList(q);
+				} else {
+					p.increaseMembersDominateMe(1);
+				}
+			}
+			
+			if (p.getDominateMe() == 0) {
+				p.setDominateRank(0);
+				fronts.get(0).add(p);
+			}
+		}
+		
+		int i = 0;
+		while(fronts.get(i).size() > 0) {
+			Front front = new Front();
+			
+			for (Individual p : fronts.get(i).schemes) {
+				for (Individual q : p.getSchemesDominated()) {
+					q.increaseMembersDominateMe(-1);
+					if (q.getDominateMe() == 0) {
+						q.setDominateRank(i + 1);
+						front.add(q);
+					}
+				}
+			}
+			i += 1;
+			fronts.set(i, front);
+		}
+		
+		return fronts;
+	}
 
 	/**
 	 * 杂交生成新个体

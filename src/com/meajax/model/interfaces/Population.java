@@ -45,6 +45,12 @@ public interface  Population{
 	public Population evolution();
 	
 	/**
+	 * 种群进化(使用NSGA2)
+	 * @return
+	 */
+	public Population evolutionByNSGA2();
+	
+	/**
 	 * 获取一个种群所有的个体
 	 */
 	public List<Individual> getSchemes();

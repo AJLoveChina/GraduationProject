@@ -6,7 +6,7 @@ import com.meajax.model.interfaces.Individual;
 import com.meajax.model.interfaces.Population;
 
 
-public class SchemeGA implements GA{
+public class SchemeGA{
     /**
      * 突变概率
      */
@@ -23,29 +23,29 @@ public class SchemeGA implements GA{
     
 	public Population evolvePopulation(Population population) {
 		
-		Population newPop = new SchemePopulation();
-		
-		// 最优秀的个体是否直接进入子代
-		int offset = 0;
-		if (elitism) {
-			newPop.saveIndividual(population.getFittest());
-			offset = 1;
-		}
-		
-		while(newPop.populationSize() < population.populationSize()) {
-			Individual father = tournamentSelection(population);
-			Individual mother = tournamentSelection(population);
-			
-			Individual child = this.crossover(father, mother);
-			newPop.saveIndividual(child);
-		}
-		
-		
-		for (int i = offset; i < newPop.populationSize(); i++) {
-			this.mutate(newPop.getIndividual(i));
-		}
-		return newPop;
-		
+//		Population newPop = new SchemePopulation();
+//		
+//		// 最优秀的个体是否直接进入子代
+//		int offset = 0;
+//		if (elitism) {
+//			newPop.saveIndividual(population.getFittest());
+//			offset = 1;
+//		}
+//		
+//		while(newPop.populationSize() < population.populationSize()) {
+//			Individual father = tournamentSelection(population);
+//			Individual mother = tournamentSelection(population);
+//			
+//			Individual child = this.crossover(father, mother);
+//			newPop.saveIndividual(child);
+//		}
+//		
+//		
+//		for (int i = offset; i < newPop.populationSize(); i++) {
+//			this.mutate(newPop.getIndividual(i));
+//		}
+//		return newPop;
+		return null;
 	}
 
 	public Individual crossover(Individual father, Individual mother) {
@@ -59,16 +59,17 @@ public class SchemeGA implements GA{
 	}
 
 	public Individual tournamentSelection(Population population) {
-		Population tournament = new SchemePopulation();
-        Random rd = new Random();
-        
-        for (int i = 0; i < tournamentSize; i++) {
-            int random = rd.nextInt(population.populationSize());
-            tournament.saveIndividual(population.getIndividual(random));
-        }
-        
-        Individual fittest = tournament.getFittest();
-        return fittest;
+//		Population tournament = new SchemePopulation();
+//        Random rd = new Random();
+//        
+//        for (int i = 0; i < tournamentSize; i++) {
+//            int random = rd.nextInt(population.populationSize());
+//            tournament.saveIndividual(population.getIndividual(random));
+//        }
+//        
+//        Individual fittest = tournament.getFittest();
+//        return fittest;
+		return null;
 	}
 	
 }

@@ -42,6 +42,43 @@ public class Scheme implements Individual{
 	 */
 	private double fitVal = 0;
 	
+	/**
+	 * 我支配的个体集合
+	 */
+	private List<Individual> schemesDominated = new ArrayList<Individual>();
+	
+	/**
+	 * 支配我的个体数量
+	 */
+	private int dominateMe = 0;
+	/**
+	 * 支配等级
+	 */
+	private int dominateRank = 0;
+
+	public int getDominateMe() {
+		return dominateMe;
+	}
+
+	public void setDominateMe(int dominateMe) {
+		this.dominateMe = dominateMe;
+	}
+
+	public List<Individual> getSchemesDominated() {
+		return schemesDominated;
+	}
+
+	public void setSchemesDominated(List<Individual> schemesDominated) {
+		this.schemesDominated = schemesDominated;
+	}
+
+	public int getDominateRank() {
+		return dominateRank;
+	}
+
+	public void setDominateRank(int dominateRank) {
+		this.dominateRank = dominateRank;
+	}
 
 	public double getFitVal() {
 		return fitVal;
@@ -174,11 +211,25 @@ public class Scheme implements Individual{
 			}
 			
 			for (double distance2 : distances) {
-				costForEachDamage += Math.pow(Math.abs(amountGet - amountNeed), 2) * distance2;
+				costForEachDamage += Math.pow(Math.abs(amountGet - amountNeed), 1.2) * distance2;
 			}
 			
 			cost += costForEachDamage;
 		}
+		
+		for (int j = 0; j < this.genes[0].length; j++) {
+			Point p = this.getDamagePoints().get(j);
+			Point p2;
+			int lack = p.getResourceAmountLack(this.genes);
+			
+			if (lack > 0) {
+				for (int i = 0; i < this.genes.length; i++) {
+					p2 = this.getResourcePoints().get(i);
+					cost += Math.pow(p2.getResourceAmountLeft(this.genes), 2) * p.getDistanceTo(p2);
+				}
+			}
+		}
+		
 		
 		this.setFitVal(1 / cost);
 	}
@@ -278,6 +329,35 @@ public class Scheme implements Individual{
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * 是否支配另一个个体
+	 * @param individual
+	 * @return
+	 */
+	public boolean isDominate(Individual individual) {
+		//TODO
+		return false;
+	}
+
+	/**
+	 * 把支配的个体加入自己的集合中
+	 */
+	public void addToDominatedList(Individual individual) {
+		this.getSchemesDominated().add(individual);
+	}
+
+//	public void increaseRank(int i) {
+//		
+//		this.dominateRank += i;
+//		
+//	}
+
+	public void increaseMembersDominateMe(int i) {
+		
+		this.dominateMe += i;
+		
 	}
 }
  

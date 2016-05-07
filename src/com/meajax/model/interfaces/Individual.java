@@ -1,5 +1,7 @@
 package com.meajax.model.interfaces;
 
+import java.util.List;
+
 public interface Individual {
 	
 	/**
@@ -44,4 +46,22 @@ public interface Individual {
 	 * 是否是合格的个体
 	 */
 	public boolean isEligible();
+//	
+	public List<Individual> getSchemesDominated();
+//	
+//	public void setSchemesDominated(List<Individual> schemesDominated);
+	
+	public void addToDominatedList(Individual individual);
+	
+	public int getDominateRank();
+	
+	public int getDominateMe();
+	
+	public void setDominateRank(int dominateRank);
+	
+	public void increaseMembersDominateMe(int i);
+	
+	
+	
+	public boolean isDominate(Individual individual);
 }
