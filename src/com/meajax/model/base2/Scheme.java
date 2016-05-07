@@ -321,11 +321,11 @@ public class Scheme implements Individual{
 			sb.append(amount);
 			sb.append("\n");
 		}
-		sb.append("-------------------------------------------------------------------------------------------------------------------" + "\n");
 		sb.append("Total : \t");
 		for (int i = 0; i < amountX.length; i++) {
 			sb.append(amountX[i] + "\t");
 		}
+		sb.append( "\n" + "-------------------------------------------------------------------------------------------------------------------");
 		return sb.toString();
 	}
 	
@@ -417,12 +417,6 @@ public class Scheme implements Individual{
 	public void addToDominatedList(Individual individual) {
 		this.getSchemesDominated().add(individual);
 	}
-
-//	public void increaseRank(int i) {
-//		
-//		this.dominateRank += i;
-//		
-//	}
 
 	public void increaseMembersDominateMe(int i) {
 		

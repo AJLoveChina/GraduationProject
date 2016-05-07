@@ -33,8 +33,7 @@ public class MainTest {
 		System.out.println("种群第一代进化...");
 		
 		Run run = new Run(pop);
-		System.out.println("种群第一代进化完成.");
-		run.start(200);
+		run.start(100);
 		System.out.println("种群迭代200代完成.");
 		
 		

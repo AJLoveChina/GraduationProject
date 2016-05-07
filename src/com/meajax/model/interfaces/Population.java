@@ -64,8 +64,7 @@ public interface  Population{
 	 */
 	public List<Front> nonDominatedSort(List<Individual> schemes);
 	
-	
-	public List<Individual> getFirstFront();
+	public List<Individual> getSchemesOfFirstFront();
 	
 	
 }

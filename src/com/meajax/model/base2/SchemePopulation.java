@@ -33,14 +33,14 @@ public class SchemePopulation implements Population{
 	 */
 	private Individual bestOne;
 	
-	private List<Individual> firstFront;
+	private List<Front> fronts;
 
-	public List<Individual> getFirstFront() {
-		return firstFront;
+	public List<Front> getFronts() {
+		return fronts;
 	}
-	
-	public void setFirstFront(List<Individual> schemes) {
-		this.setFirstFront(schemes);
+
+	public void setFronts(List<Front> fronts) {
+		this.fronts = fronts;
 	}
 
 	public Individual getBestOne() {
@@ -75,8 +75,6 @@ public class SchemePopulation implements Population{
 		this.schemes = schemes;
 	}
 	
-	
-
 	public void init() {
 		List<Individual> schemes = new ArrayList<Individual>();
 		
@@ -170,7 +168,10 @@ public class SchemePopulation implements Population{
 
 		
 		while(schemes.size() < this.SCHEME_NUM) {
-			Individual scheme = this.generateANewIndividual();
+			Individual scheme = this.generateANewIndividualByNSGA2();
+			if (scheme == null) {
+				continue;
+			}
 			scheme.mutate();
 			if (scheme.isEligible()) {
 				schemes.add(scheme);
@@ -183,6 +184,7 @@ public class SchemePopulation implements Population{
 		
 		// 后代与父代非支配排序
 		List<Front> fronts = this.nonDominatedSort(schemes);
+		//pop.setFronts(fronts);
 		
 		schemes = new ArrayList<Individual>();
 		Random rd = new Random();
@@ -196,7 +198,7 @@ public class SchemePopulation implements Population{
 			}
 		}
 		
-		pop.setFirstFront(fronts.get(0).schemes);
+		
 		pop.setSchemes(schemes);
 		return pop;
 	}
@@ -263,7 +265,7 @@ public class SchemePopulation implements Population{
 	}
 
 	/**
-	 * 杂交生成新个体
+	 * 杂交生成新个体 (遗传算法)
 	 * @return
 	 */
 	private Individual generateANewIndividual() {
@@ -272,8 +274,45 @@ public class SchemePopulation implements Population{
 		
 		Individual fittestOfList1 = this.getFittest(list1);
 		Individual fittestOfList2 = this.getFittest(list2);
+		
 		Individual child = fittestOfList1.crossoverWith(fittestOfList2);
 		return child;
+	}
+	
+	/**
+	 * 杂交生成新个体(NSGA2)
+	 * @return
+	 */
+	private Individual generateANewIndividualByNSGA2() {
+
+		Random rd = new Random();
+		
+		Individual scheme1 = this.schemes.get(rd.nextInt(this.schemes.size()));
+		Individual scheme2 = this.schemes.get(rd.nextInt(this.schemes.size()));
+		
+		if(scheme1 == scheme2) {
+			return null;
+		}
+		
+		Individual child = scheme1.crossoverWith(scheme2);
+		return child;
+	}
+	
+	// 这个方法暂时没用
+	private Individual getRandomIndivualsOfNSGA2() {
+		List<Individual> list = new ArrayList<Individual>();
+		Random rd = new Random();
+		int size = this.fronts.size();
+		int total = size * (size + 1) / 2;
+		float random = rd.nextFloat();
+		
+		for (int i = 0; i < size; i++) {
+			if ((random >= (i * (i + 1)  / (2 * total))) && (random < ((i + 1) * (i + 2)  / (2 * total)))) {
+				list = this.fronts.get(size - i - 1).schemes;
+			}
+		}
+		
+		return list.get(rd.nextInt(list.size()));
 	}
 
 	private List<Individual> genenrateIndividualListByRandom() {
@@ -292,9 +331,10 @@ public class SchemePopulation implements Population{
 				+ "]";
 	}
 
-	public void setIteration(int iteration) {
-		// TODO Auto-generated method stub
-		
+	
+
+	public List<Individual> getSchemesOfFirstFront() {
+		return this.getFronts().get(0).schemes;
 	}
 	
 	
