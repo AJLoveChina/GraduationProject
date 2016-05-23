@@ -1,8 +1,10 @@
 package com.meajax.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.meajax.model.QueryResult;
 import com.meajax.model.base2.SchemePopulation;
 import com.meajax.model.interfaces.GA;
 import com.meajax.model.interfaces.Individual;
@@ -39,8 +41,10 @@ public class Run {
 		List<SchemePopulation.Front> fronts = this.population.nonDominatedSort(this.population.getSchemes());
 		List<Individual> schemes = fronts.get(0).getSchemes();
 		
+		List<QueryResult> qrs = new ArrayList<QueryResult>();
 		for (Individual scheme : schemes) {
 			System.out.println(scheme.toString());
+			qrs.add(scheme.toQueryResult());
 		}
 	}
 	

@@ -34,7 +34,7 @@ public class MainTest {
 		
 		Run run = new Run(pop);
 		run.start(100);
-		System.out.println("种群迭代200代完成.");
+		System.out.println("种群迭代完成.");
 		
 		
 	}

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
+import com.meajax.model.QueryResult;
 import com.meajax.model.interfaces.Individual;
 
 /**
@@ -17,7 +18,7 @@ import com.meajax.model.interfaces.Individual;
  */
 public class Scheme implements Individual{
 
-	public final double MUTATE_RATE = 0.015;
+	public final double MUTATE_RATE = 0.01;
 	/**
 	 * 资源点
 	 */
@@ -426,6 +427,33 @@ public class Scheme implements Individual{
 		
 		this.dominateMe += i;
 		
+	}
+
+	public QueryResult toQueryResult() {
+		QueryResult qr = new QueryResult();
+		qr.setIsok(true);
+		List<QueryResult.Line> lines = new ArrayList<QueryResult.Line>();
+		
+		for (int i = 0; i < this.genes.length; i++) {
+			for (int j = 0; j < this.genes[i].length; j++) {
+				String info = "";
+				List<QueryResult.Point> points = new ArrayList<QueryResult.Point>();
+				Point resource = this.getResourcePoints().get(i);
+				Point damage = this.getDamagePoints().get(j);
+				
+				points.add(qr.new Point(resource.getLongitude(), resource.getLatitude(), resource.getName()));
+				points.add(qr.new Point(damage.getLongitude(), damage.getLatitude(), damage.getName()));
+				
+				QueryResult.Line line = qr.new Line(points, "#000", "" + this.genes[i][j]);
+				
+			}
+		}
+		
+		QueryResult.Data data = qr.new Data(lines);
+		
+		
+		qr.setData(data);
+		return qr;
 	}
 	
 	

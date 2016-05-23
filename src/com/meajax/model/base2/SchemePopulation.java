@@ -189,12 +189,18 @@ public class SchemePopulation implements Population{
 		
 		schemes = new ArrayList<Individual>();
 		Random rd = new Random();
+		int randomNumber;
+		List<Integer> randomNumberList = new ArrayList<Integer>();
 		for (int i = 0; i < fronts.size() && schemes.size() < this.SCHEME_NUM; i++) {
 			if (schemes.size() + fronts.get(i).size() <= this.SCHEME_NUM) {
 				schemes.addAll(fronts.get(i).schemes);
 			} else {
 				while(schemes.size() < this.SCHEME_NUM) {
-					schemes.add(fronts.get(i).schemes.get(rd.nextInt(fronts.get(i).size())));
+					randomNumber = rd.nextInt(fronts.get(i).size());
+					if (!randomNumberList.contains(randomNumber)) {
+						schemes.add(fronts.get(i).schemes.get(randomNumber));
+						randomNumberList.add(randomNumber);
+					}
 				}
 			}
 		}

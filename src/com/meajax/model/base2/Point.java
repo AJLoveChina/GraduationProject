@@ -40,7 +40,7 @@ public class Point {
 	 */
 	private int resourceAmount;
 	
-	public final int BASE_AMOUNT_OF_RESOURCE = 50;
+	public final int BASE_AMOUNT_OF_RESOURCE = 200;
 	public final int BASE_AMOUNT_OF_DAMAGE = 50;
 	
 	
