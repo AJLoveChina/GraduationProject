@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 import com.meajax.model.interfaces.Individual;
 
 /**
@@ -392,11 +394,13 @@ public class Scheme implements Individual{
 			break;
 		case FAIR :
 			for (int j = 0; j < this.genes[0].length; j++) {
-				int amountGet = this.getDamagePoints().get(j).getResourceAmountHasGet(this.genes);
-				int amountNeed = this.getDamagePoints().get(j).getResourceAmount();
+				double amountGet = this.getDamagePoints().get(j).getResourceAmountHasGet(this.genes);
+				double amountNeed = this.getDamagePoints().get(j).getResourceAmount();
 				
 				if (amountNeed != 0) {
-					fitness += amountGet / this.getDamagePoints().get(j).getResourceAmount();
+					double manzudu =  amountGet / amountNeed;
+					manzudu  = manzudu >=1 ? 1 : manzudu;
+					fitness += manzudu; //this.getDamagePoints().get(j).getResourceAmount()
 				}
 			}
 			break;

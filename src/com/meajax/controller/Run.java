@@ -31,7 +31,7 @@ public class Run {
 	
 	private void evolution(int iterations) {
 		for (int i = 0; i < iterations; i++) {
-			this.setPopulation(population.evolution());
+			this.setPopulation(population.evolutionByNSGA2());
         }
 		System.out.println("Finished (iterations = " + iterations + "): ");
 		

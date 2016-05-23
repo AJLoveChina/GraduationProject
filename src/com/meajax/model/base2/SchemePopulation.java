@@ -2,6 +2,7 @@ package com.meajax.model.base2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.meajax.model.interfaces.Individual;
@@ -198,6 +199,16 @@ public class SchemePopulation implements Population{
 			}
 		}
 		
+		double avgFitnessDis = 0;
+		double avgFitnessFair = 0;
+		for (int i = 0; i < schemes.size(); i++) {
+			Map<Aim, Double> map = schemes.get(i).getFitnessMap();
+			avgFitnessDis += map.get(Aim.DISTANCES_MIN);
+			avgFitnessFair += map.get(Aim.FAIR);
+		}
+		System.out.println("avgFitnessDis : " + avgFitnessDis / schemes.size());
+		System.out.println("avgFitnessFair : " + avgFitnessFair / schemes.size());
+		System.out.println("-------------------------------------------");
 		
 		pop.setSchemes(schemes);
 		return pop;
@@ -216,6 +227,20 @@ public class SchemePopulation implements Population{
 		
 		public List<Individual> getSchemes() {
 			return this.schemes;
+		}
+		
+		public String toString() {
+			double avgFitnessDis = 0;
+			double avgFitnessFair = 0;
+			for (int i = 0; i < schemes.size(); i++) {
+				Map<Aim, Double> map = schemes.get(i).getFitnessMap();
+				avgFitnessDis += map.get(Aim.DISTANCES_MIN);
+				avgFitnessFair += map.get(Aim.FAIR);
+			}
+			String result = "";
+			result += "avgFitnessDis : " + avgFitnessDis / schemes.size();
+			result += "avgFitnessFair : " + avgFitnessFair / schemes.size();
+			return result;
 		}
 	}
 	/**
